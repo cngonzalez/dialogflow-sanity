@@ -27,5 +27,7 @@
     "react-dom": "^17.0",
     "react-icons": "^3.11.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@sanity/cli": "2.10.0"
+  }
 }
