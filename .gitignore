@@ -47,3 +47,5 @@ yarn-error.log*
 template/public/studio
 
 dist
+
+dialogflow_key.json
