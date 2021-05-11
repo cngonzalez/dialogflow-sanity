@@ -15,7 +15,7 @@ function formatTrainingPhrases(blocks = []) {
       block.children.forEach(child => {
         if (child.displayName) {
           trainingPhrase.parts.push({
-            text: `$${child.displayName}`,
+            text: child.displayName,
             alias: child.displayName,
             entityType: "@sys.any",
             userDefined: true
@@ -31,7 +31,7 @@ function formatTrainingPhrases(blocks = []) {
     }
   })
   const formattedParameters = Array.from(parameters).map(param => (
-    {name: '', display_name: param}))
+    {name: '', displayName: param}))
   return [trainingPhrases, formattedParameters]
 }
 
@@ -45,11 +45,12 @@ const handler = async (req, res) => {
   
   const formattedIntent = {
     displayName: rawIntent.name,
-    webhookState: true,
+    webhookState: "WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING",
     trainingPhrases,
     parameters
   }
 
+  //TODO: a create or update action
   const [response] = await intentsClient.createIntent({
     parent: agentPath,
     intent: formattedIntent

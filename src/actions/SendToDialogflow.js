@@ -25,7 +25,9 @@ export const SendToDialogflow = ({
     onHandle: async () => {
       const res = await hitIntentEndpoint(intent)
       console.log(res)
-      await publish.execute()
+      if (draft) {
+        await publish.execute()
+      }
       setDialogOpen(true)
     },
     dialog: dialogOpen && {
