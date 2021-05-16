@@ -10,7 +10,7 @@ const client = sanityClient({
 //TODO: use groq here isntead
 const constructFulfillmentEntityQuery = async (fulfillmentEntity, params) => {
   const baseQueryFilter = `*[_type == '${fulfillmentEntity.entityType}'`
-  const endQuery = `][0..${fulfillmentEntity.entityQuantity}]{ title }`
+  const endQuery = `][0...${fulfillmentEntity.entityQuantity}]{ title }`
   let addFilter = ""
 
   const referenceFilters = fulfillmentEntity.filters.filter(filt => filt.filterMetric == 'references')

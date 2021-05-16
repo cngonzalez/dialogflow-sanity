@@ -13,10 +13,12 @@ import screening from './screening'
 import plotSummary from './plotSummary'
 import plotSummaries from './plotSummaries'
 import intent from './intent'
+import quiz from './quiz'
 import fulfillment from './objects/fulfillment'
 import fulfillmentEntity from './objects/fulfillmentEntity'
 import fulfillmentFilter from './objects/fulfillmentFilter'
 import intentParameter from './objects/intentParameter'
+import quizQuestion from './objects/quizQuestion'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -36,9 +38,11 @@ export default createSchema({
     castMember,
     crewMember,
     intent,
+    quiz,
     fulfillment,
     fulfillmentEntity,
     fulfillmentFilter,
-    intentParameter
+    intentParameter,
+    quizQuestion
   ])
 })
