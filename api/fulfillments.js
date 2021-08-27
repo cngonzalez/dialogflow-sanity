@@ -1,4 +1,3 @@
-const {WebhookClient} = require('dialogflow-fulfillment');
 import sanityClient from '@sanity/client'
 
 const client = sanityClient({
@@ -44,19 +43,26 @@ const formatFulfillment = async (blocks = [], params) =>  {
 
 
 
-const handler = async (request, response) => {
-  const agent = new WebhookClient({ request, response });
-  const intentName = request.body.queryResult.intent.displayName
+const handler = async (req, res) => {
+  const intentName = req.body.queryResult.intent.displayName
   const intent = await client.fetch(
     `*[_type == 'intent' && name == $intentName][0]`,
     { intentName })
   const chosenFulfillmentIdx = Math.floor(Math.random() * intent.fulfillments.length)
-  const formattedFulfillment = await formatFulfillment(intent.fulfillments[chosenFulfillmentIdx].content, request.body.queryResult.parameters)
+  const formattedFulfillment = await formatFulfillment(intent.fulfillments[chosenFulfillmentIdx].content, req.body.queryResult.parameters)
+  const textResponse = {
+    fulfillmentMessages: [
+      {
+        text: {
+          text: [
+            formattedFulfillment
+          ]
+        }
+      }
+    ]
+  }
 
-  let intentMap = new Map()
-  intentMap.set(intentName, () => agent.add(formattedFulfillment))
-  intentMap.set('fallback', () => agent.add("sorry, didn't get that"))
-  agent.handleRequest(intentMap);
+  res.send(JSON.stringify(textResponse), 200)
 
 }
 
